@@ -12,12 +12,12 @@ a {
 }
 
 .icons {
-  font-size: 16px;
+  @include rem-fallback(font-size, 1);
   font-weight: 400;
   line-height: inherit;
 }
 .container {
-  width: 960px;
+  @include rem-fallback(width, 60);
   margin: 0 auto;
 
   @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
@@ -25,27 +25,31 @@ a {
   }
 
   > header {
-    sup {
+    .nav-wrap {
       display: none;
 
       @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
-        cursor: pointer;
-        display: inline-block;
-        background-color: $red;
-        height: 24px;
-        width: 20px;
-        padding: 4px 4px 3px 3px;
-        position: relative;
-        top: 4px;
-        margin-left: 0;
+        background: $red;
+        display: block;
 
-        .stripe {
-          @include border-radius(3px);
-          background-color: #FFFFFF;
-          border: 1px solid #FFFFFF;
-          height: 0;
-          margin-top: 3px;
-          width: 90%;
+        #hamburger {
+          cursor: pointer;
+          display: inline-block;
+          @include rem-fallback(height, 1.75);
+          @include rem-fallback(width, 1.75);
+          @include rem-fallback(padding, 0.25 0.25 0.1875 0.25);
+          position: relative;
+          top: 4px;
+          margin-left: 0;
+
+          .stripe {
+            @include border-radius(3px);
+            background-color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            height: 0;
+            @include rem-fallback(margin-top, 0.1875);
+            width: 90%;
+          }
         }
       }
     }
@@ -55,51 +59,66 @@ a {
 .logo {
   display: block;
   background: url(../imgs/logo.svg);
-  width: 126px;
-  height: 40px;
+  @include rem-fallback(width, 7.875);
+  @include rem-fallback(height, 2.5);
   background-size: contain;
-  margin: 10px 0;
+  @include rem-fallback(margin, 0.625 0);
   text-indent: -9999px;
 
   @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
     display: inline-block;
     vertical-align: top;
+    @include rem-fallback(margin-left, 0.3125);
+    @include rem-fallback(margin-right, 0.3125);
+  }
+}
+
+.title {
+  @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+    display: inline-block;
   }
 }
 
 //tabbed navigation
 .nav {
-  margin: 0 0 10px 0;
+  @include rem-fallback(margin, 0 0 0.625 0);
 
   li {
     text-align: center;
     position: relative;
     display: inline-block;
-    border: 1px solid $gray;
-    border-bottom: 0px;
-    @include border-top-radius(4px);
-    margin-right:6px;
+    @include rem-fallback(margin-right, 0.375);
 
     @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
       display: block;
-      border-width: 1px 0;
-      border-top-color: #555;
-      border-bottom-color: #333;
-      border-radius: 0px;
       text-align: left;
-      padding-left: 12px;
+      margin:0;
+      border-top: 1px solid red;
+      border-bottom: 1px solid pink;
+
+      &:first-child {
+        border-top: none;
+      }
     }
 
     a {
       display: inline-block;
-      padding: 10px;
-      width: 70px;
+      @include rem-fallback(padding, 0.625);
+      @include rem-fallback(width, 4.375);
       color: $darkGray;
       text-decoration: none;
-      //@include gradient(#FFFFFF, #F5F5F5);
+      border: 1px solid $gray;
+      border-bottom: 0px;
+      @include border-top-radius(4px);
+      @include gradient(#FFFFFF, #F5F5F5);
 
       @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+        display: block;
         color: #fff;
+        border-radius: 0;
+        background: transparent;
+        width: 100%;
+        border: none;
       }
 
       &:hover {
@@ -107,12 +126,13 @@ a {
         color: $black;
       }
 
-      &.selected {
+    }
+    &.selected {
+      a {
         color: $black;
-        //background: #FFFFFF;
+        background: #FFFFFF;
       }
     }
-
     &.search {
       border: 0;
       color: $darkGray;
@@ -146,7 +166,7 @@ a {
     top: 0px;
     left: 0px;
     height: 100%;
-    background: #444;
+    background: $darkGray;
     width: 80%;
 
     &.open {
@@ -158,7 +178,7 @@ a {
 //accordion navigation
 .accordion {
   li {
-    margin-bottom: 6px;
+    @include rem-fallback(margin-bottom, 0.375);
     cursor: pointer;
   }
 
@@ -167,13 +187,13 @@ a {
     font-weight: 100;
     color: #FFFFFF;
     background: $black;
-    padding: 12px;
+    @include rem-fallback(padding, 0.75);
     text-transform: uppercase;
     margin: 0;  
   }
 
   i {
-    margin-right: 12px;
+    @include rem-fallback(margin-right, 0.75);
   }
   .aContent {
     display: none;
@@ -206,23 +226,28 @@ a {
       background: $lightGray;
     }
     header {
-      padding: 10px 0 0 0;
+      @include rem-fallback(padding, 0.625 0 0 0);
       h1 {
         font-family: arial, sans-serif;
         margin: 0;
         color: $black;
-        font-size: 24px;
+        @include rem-fallback(font-size, 1.5);
       }
       p {
         color: $darkGray;
-        font-size: 12px;
+        @include rem-fallback(font-size, 0.75);
       }
     }
     a {
-      padding-top: 10px;
-      padding-right: 10px;
+      @include rem-fallback(padding-top, 0.625);
+      @include rem-fallback(padding-right, 0.625);
       text-align: right;
-      font-size: 14px;
+      @include rem-fallback(font-size, 0.875);
+    }
+    @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+      img, header, a {
+        display: block;
+      }
     }
   }
 }
@@ -232,12 +257,12 @@ a {
   color: $darkGray;
   background: $lightGray;
   text-align: center;
-  padding: 20px 0;
+  @include rem-fallback(padding, 1.25 0);
 
   h3 {
     font-family: $brandFont;
     font-weight: 300;
     text-transform: uppercase;
-    margin: 0 0 4px 0;
+    @include rem-fallback(margin, 0 0 0.25 0);
   }
 }

@@ -18,7 +18,10 @@ $(function() {
           .text(state.abbreviation)
           .click(function(e) {
             e.preventDefault();
+            nav.find('li').removeClass('selected');
+            li.addClass('selected');
             buildContent(state);
+            nav.removeClass('open');
           });
 
         li.append(anchor);
