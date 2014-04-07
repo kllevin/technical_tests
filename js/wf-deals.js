@@ -1,4 +1,6 @@
 $(function() {
+  var nav = $("#nav");
+  var hamburger = $("#hamburger");
 
   $.ajax ({
     method: 'GET',
@@ -24,9 +26,19 @@ $(function() {
       });
 
       //Set first nav item to selected
-      $("#nav").find('li:first-of-type a').click();
+      nav.find('li:first-of-type a').click();
     }
   });
+
+  $(document).click(function(e) {
+    var navOpen = nav.hasClass('open');
+
+    if (navOpen && e.target.id !== 'nav' && !$(e.target).parents('#nav').length) {
+      nav.removeClass('open');
+    } else if (!navOpen && e.target.id === 'hamburger') {
+      nav.addClass('open');
+    }
+  })
 });
 
 //Build accordion and fill in with centre by state
@@ -112,12 +124,26 @@ function buildDeals(li, centre) {
 
       $.each(data, function(i, deal) {
         getStoreContent(deal.deal_stores[0].store_service_id, function(storeInfo) {
+          var img = $('<img/>')
+            .attr('src', storeInfo.logo)
+            .addClass('col-2-12');
+
+          var header = $('<header/>')
+            .append(
+              $('<h1/>').text(deal.title),
+              $('<p/>').text('Deal from ' + deal.available_from + ' to ' + deal.available_to + ', from ' + storeInfo.name)
+            )
+            .addClass('col-8-12');
+
+          var anchor = $('<a/>')
+            .html('View More<i class="icon-play"></i>')
+            .attr('href', '')
+            .addClass('col-2-12');
 
           var article = $('<article/>').append(
-            $('<img/>').attr('src', storeInfo.logo),
-            $('<h3/>').text(deal.title),
-            $('<p/>').text('Deal from ' + deal.available_from + ' to ' + deal.available_to + ', from ' + storeInfo.name),
-            $('<a/>').html('View More &#9658;').attr('href', '')
+            img,
+            header,
+            anchor
           );
 
           dealContainer.append(article);

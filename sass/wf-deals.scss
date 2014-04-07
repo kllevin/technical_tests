@@ -3,6 +3,7 @@
 @import 'variables';
 @import 'mixins';
 @import 'iconfont';
+@import 'grid';
 @import 'base';
 
 a {
@@ -14,21 +15,56 @@ a {
   font-size: 16px;
   font-weight: 400;
   line-height: inherit;
-
 }
 .container {
   width: 960px;
   margin: 0 auto;
+
+  @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+    width: 100%;
+  }
+
+  > header {
+    sup {
+      display: none;
+
+      @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+        cursor: pointer;
+        display: inline-block;
+        background-color: $red;
+        height: 24px;
+        width: 20px;
+        padding: 4px 4px 3px 3px;
+        position: relative;
+        top: 4px;
+        margin-left: 0;
+
+        .stripe {
+          @include border-radius(3px);
+          background-color: #FFFFFF;
+          border: 1px solid #FFFFFF;
+          height: 0;
+          margin-top: 3px;
+          width: 90%;
+        }
+      }
+    }
+  }
 }
 
 .logo {
-  display:block;
+  display: block;
   background: url(../imgs/logo.svg);
   width: 126px;
   height: 40px;
   background-size: contain;
   margin: 10px 0;
   text-indent: -9999px;
+
+  @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+    display: inline-block;
+    vertical-align: top;
+  }
 }
 
 //tabbed navigation
@@ -44,6 +80,16 @@ a {
     @include border-top-radius(4px);
     margin-right:6px;
 
+    @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+      display: block;
+      border-width: 1px 0;
+      border-top-color: #555;
+      border-bottom-color: #333;
+      border-radius: 0px;
+      text-align: left;
+      padding-left: 12px;
+    }
+
     a {
       display: inline-block;
       padding: 10px;
@@ -51,6 +97,10 @@ a {
       color: $darkGray;
       text-decoration: none;
       //@include gradient(#FFFFFF, #F5F5F5);
+
+      @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+        color: #fff;
+      }
 
       &:hover {
         background-color: #FFFFFF;
@@ -69,14 +119,38 @@ a {
       position: relative;
       margin: 0;
 
+      @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+        border-bottom: none;
+        padding-top: 22px;
+      }
+
       i {
         position: absolute;
-        top: 12px;
+        top: 14px;
         left: 12px;
+
+        @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+          top: 34px;
+          left: 22px;
+        }
       }
       input {
         padding-left: 36px;
       }
+    }
+  }
+
+  @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    background: #444;
+    width: 80%;
+
+    &.open {
+      display: block;
     }
   }
 }
@@ -99,7 +173,7 @@ a {
   }
 
   i {
-    margin-right:12px;
+    margin-right: 12px;
   }
   .aContent {
     display: none;
@@ -109,9 +183,10 @@ a {
     
     h2 {
       background-color: $red;
-    }
-    i {
-      @extend .icon-minus;
+
+      i {
+        @extend .icon-minus;
+      }
     }
 
     .aContent {
@@ -122,22 +197,32 @@ a {
 
 //deals
 .aContent {
+  @extend .grid;
   //single deal
   article {
+    @include clearfix();
+
     &:nth-child(odd) {
       background: $lightGray;
     }
-    img {
-      display: block;
-      width: 120px;
+    header {
+      padding: 10px 0 0 0;
+      h1 {
+        font-family: arial, sans-serif;
+        margin: 0;
+        color: $black;
+        font-size: 24px;
+      }
+      p {
+        color: $darkGray;
+        font-size: 12px;
+      }
     }
-    h3 {
-      font-weight: normal;
-      color: $black;
-    }
-    p {
-      color: $darkGray;
-      font-size: 12px;
+    a {
+      padding-top: 10px;
+      padding-right: 10px;
+      text-align: right;
+      font-size: 14px;
     }
   }
 }
