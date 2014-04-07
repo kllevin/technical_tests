@@ -23,11 +23,13 @@ $(function() {
         search.before(li);
       });
 
+      //Set first nav item to selected
       $("#nav").find('li:first-of-type a').click();
     }
   });
 });
 
+//Build accordion and fill in with centre by state
 function buildContent(state) {
   $.ajax({
     method: 'GET',
@@ -37,6 +39,17 @@ function buildContent(state) {
     },
     success: function(data) {
       var accordion = $('#accordion').empty();
+
+      //use no deals message for no centre in a state
+      if (!data || data.length === 0) {
+        accordion.append(
+          $('#noDeals')
+            .clone()
+            .removeAttr('id')
+            .removeClass('hide')
+        );
+        return;
+      }
 
       $.each(data, function(i, centre) {
         var li = $('<li/>');
@@ -73,6 +86,8 @@ function buildContent(state) {
   });
 }
 
+// build available deals by centre
+//TODO: cache store information, do deals needs to be in a specific order?
 function buildDeals(li, centre) {
   $.ajax({
     method: 'GET',
@@ -82,8 +97,46 @@ function buildDeals(li, centre) {
       state: 'published'
     },
     success: function(data) {
-      console.log("hello");
+      var dealContainer = li.find('.aContent').empty();
+
+      //check for deals
+      if (!data || data.length === 0) {
+        dealContainer.append(
+          $('#noDeals')
+            .clone()
+            .removeAttr('id')
+            .removeClass('hide')
+        );
+        return;
+      }
+
+      $.each(data, function(i, deal) {
+        getStoreContent(deal.deal_stores[0].store_service_id, function(storeInfo) {
+
+          var article = $('<article/>').append(
+            $('<img/>').attr('src', storeInfo.logo),
+            $('<h3/>').text(deal.title),
+            $('<p/>').text('Deal from ' + deal.available_from + ' to ' + deal.available_to + ', from ' + storeInfo.name),
+            $('<a/>').html('View More &#9658;').attr('href', '')
+          );
+
+          dealContainer.append(article);
+        });
+      });
     }
   });
 }
 
+// gets information for a store
+function getStoreContent(id, callback) {
+  $.ajax({
+    method: 'GET',
+    url: 'http://www.westfield.com.au/api/store/master/stores/' + id + '.json',
+    success: function(data) {
+      callback({
+        name: data.name,
+        logo: data._links.logo.href
+      });
+    }
+  });
+}
