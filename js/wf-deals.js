@@ -10,6 +10,7 @@ $(function() {
     },
     success: function(data) {
       var search = $('#search');
+      var sub = $('.nav-wrap sub');
 
       $.each(data, function(i, state) {
         var li = $('<li/>');
@@ -20,6 +21,7 @@ $(function() {
             e.preventDefault();
             nav.find('li').removeClass('selected');
             li.addClass('selected');
+            sub.text(state.name);
             buildContent(state);
             nav.removeClass('open');
           });
@@ -87,14 +89,14 @@ function buildContent(state) {
         accordion.append(li);
       });
 
-      $(".accordion li").click(function() {
-        var self = $(this);
+      $(".accordion li h2").click(function() {
+        var li = $(this).parent();
 
-        if (self.hasClass("selected")) {
-          self.removeClass("selected");
+        if (li.hasClass("selected")) {
+          li.removeClass("selected");
         } else {
           $(".accordion li").removeClass('selected');
-          self.addClass("selected"); 
+          li.addClass("selected"); 
         }
       });
     }
@@ -104,6 +106,12 @@ function buildContent(state) {
 // build available deals by centre
 //TODO: cache store information, do deals needs to be in a specific order?
 function buildDeals(li, centre) {
+  var dealContainer = li.find('.aContent');
+
+  if (!dealContainer.is(':empty')) {
+    return;
+  }
+
   $.ajax({
     method: 'GET',
     url: 'http://www.westfield.com.au/api/deal/master/deals.json?',
@@ -112,7 +120,7 @@ function buildDeals(li, centre) {
       state: 'published'
     },
     success: function(data) {
-      var dealContainer = li.find('.aContent').empty();
+      var dealContainer = li.find('.aContent');
 
       //check for deals
       if (!data || data.length === 0) {

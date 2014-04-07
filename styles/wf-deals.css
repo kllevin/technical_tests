@@ -523,7 +523,16 @@ a {
             height: 0;
             margin-top: 3px;
             margin-top: 0.1875rem;
-            width: 90%; } }
+            width: 90%; }
+        .container > header .nav-wrap sub {
+          font-family: "Lato", sans-serif;
+          font-weight: normal;
+          bottom: 8px;
+          bottom: 0.5rem;
+          vertical-align: middle;
+          color: #FFFFFF;
+          font-size: 16px;
+          font-size: 1rem; } }
 
 .logo {
   display: block;
@@ -563,8 +572,8 @@ a {
         display: block;
         text-align: left;
         margin: 0;
-        border-top: 1px solid red;
-        border-bottom: 1px solid pink; }
+        border-top: 1px solid #777777;
+        border-bottom: 1px solid #888888; }
         .nav li:first-child {
           border-top: none; } }
     .nav li a {
@@ -588,7 +597,7 @@ a {
       @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
         .nav li a {
           display: block;
-          color: #fff;
+          color: #FFFFFF;
           border-radius: 0;
           background: transparent;
           width: 100%;
@@ -596,6 +605,10 @@ a {
       .nav li a:hover {
         background-color: #FFFFFF;
         color: #111111; }
+        @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+          .nav li a:hover {
+            background-color: transparent;
+            color: #FFFFFF; } }
     .nav li.selected a {
       color: #111111;
       background: #FFFFFF; }
@@ -618,6 +631,10 @@ a {
             left: 22px; } }
       .nav li.search input {
         padding-left: 36px; }
+        @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
+          .nav li.search input {
+            margin-left: 12px;
+            margin-left: 0.75rem; } }
   @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
     .nav {
       display: none;
@@ -645,7 +662,11 @@ a {
   margin: 0; }
 .accordion i {
   margin-right: 12px;
-  margin-right: 0.75rem; }
+  margin-right: 0.75rem;
+  display: inline-block;
+  vertical-align: middle;
+  height: 20.8px;
+  height: 1.3rem; }
 .accordion .aContent {
   display: none; }
 .accordion li.selected h2 {
@@ -682,8 +703,14 @@ a {
   font-size: 14px;
   font-size: 0.875rem; }
 @media only screen and (max-width: 568px), only screen and (max-device-width: 568px) {
-  .aContent article img, .aContent article header, .aContent article a {
-    display: block; } }
+  .aContent article {
+    padding: 1rem; }
+    .aContent article img, .aContent article header, .aContent article a {
+      display: block;
+      clear: both;
+      width: 100%; }
+    .aContent article img {
+      width: 60%; } }
 
 .noContent {
   color: #777777;
